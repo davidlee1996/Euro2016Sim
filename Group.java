@@ -1,26 +1,16 @@
 import java.lang.Math;
 
 public class Group {
-  public Team A;
-  public Team B;
-  public Team C;
-  public Team D;
+  public Team[] teams;
   public Match[] fixtures;
 
-  public Group(Team a1, Team b1, Team c1, Team d1) {
-    A = a1;
-    B = b1;
-    C = c1;
-    D = d1;
-    makeFix();
-  }
-
-  public Team[] getTeams() {
-    return new Team[] {A, B, C, D};
-  }
-
-  public void makeFix() {
+  public Group(Team A, Team B, Team C, Team D) {
+    teams = new Team[4];
     fixtures = new Match[6];
+    teams[0] = A;
+    teams[1] = B;
+    teams[2] = C;
+    teams[3] = D;
     fixtures[0] = new Match(A, B, true);
     fixtures[1] = new Match(C, D, true);
     fixtures[2] = new Match(A, C, true);
@@ -29,13 +19,31 @@ public class Group {
     fixtures[5] = new Match(B, C, true);
   }
 
+  public Match findMatch(Team a, Team b) {
+    for (int i = 0; i < 6; i += 1) {
+      if (fixtures[i].contains(a, b)) {
+        return fixtures[i];
+      }
+    }
+    System.out.println("No match was found between these two.");
+    return null;
+  }
+
+  public Team[] getTeams() {
+    return teams;
+  }
+
+  public Match[] getMatches() {
+    return fixtures;
+  }
+
   public void play() {
     System.out.println();
     System.out.println("=====================================================");
     System.out.println();
-    System.out.println("In this group are: " + A.toString() + ", "
-                      + B.toString() + ", " + C.toString() + ", "
-                      + D.toString() + ".");
+    System.out.println("In this group are: " + teams[0].toString() + ", "
+                      + teams[1].toString() + ", " + teams[2].toString() + ", "
+                      + teams[3].toString() + ".");
     System.out.println();
     for (int i = 0; i < 6; i += 1) {
       if (((i % 2) == 0) && (i != 0)) {
@@ -49,15 +57,22 @@ public class Group {
   public void displayStandings() {
     Team[] teams = this.standings();
     for (int j = 3; j >=0 ; j -= 1) {
-      System.out.println(teams[j].getRank() + "." + teams[j] + " (" + teams[j].getPoints() + ")");
+      System.out.println(teams[j].getRank() + "." + teams[j]
+                        + " (Points: " + teams[j].getPoints()
+                        + " | Wins: " + teams[j].getWins()
+                        + " | Draws: " + teams[j].getDraws()
+                        + " | Losses: " + teams[j].getLosses()
+                        + " | GD: " + teams[j].goalDifference()
+                        + " | GF: " + teams[j].getGoalsScored()
+                        + " | GA: " + teams[j].getGoalsAllowed() + ")");
     }
     System.out.println();
     System.out.println("=====================================================");
   }
 
   public Team[] standings() {
-    Team[] teams = this.getTeams();
-    sorter(teams);
+    Sort thing = new Sort();
+    thing.bubbleSorter(teams, fixtures);
     for (int j = 3; j >= 0; j -= 1) {
       for (int i = 0; i < 4; i += 1) {
         teams[i].changeRank(4 - i);
@@ -66,20 +81,4 @@ public class Group {
     return teams;
   }
 
-  private void sorter(Team[] teams) {
-    /* Bubble sorts in ascending order. */
-    int len = teams.length;
-    int temp;
-    for (int i = len; i >= 0; i -= 1) {
-      for (int j = 0; j < len - 1; j += 1) {
-        temp = j + 1;
-        if (teams[j].getPoints() > teams[temp].getPoints()) {
-          Team t;
-          t = teams[j];
-          teams[j] = teams[temp];
-          teams[temp] = t;
-        }
-      }
-    }
-  }
 }

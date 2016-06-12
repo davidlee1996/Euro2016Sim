@@ -4,12 +4,18 @@ public class Team {
   public String name;
   public int goalsScored;
   public int goalsAllowed;
+  public int numWins;
+  public int numLosses;
+  public int numDraws;
   public boolean qual;
   public int rank;
 
   public Team(double d, String n) {
     odds = d;
     name = n;
+    numWins = 0;
+    numDraws = 0;
+    numLosses = 0;
     points = 0;
     qual = false;
     goalsScored = 0;
@@ -31,6 +37,13 @@ public class Team {
 
   public void change(int d) {
     points += d;
+    if (d == 3) {
+      numWins += 1;
+    } else if (d == 1) {
+      numDraws += 1;
+    } else {
+      numLosses += 1;
+    }
   }
 
   public void qualify() {
@@ -43,6 +56,30 @@ public class Team {
 
   public void concede(int n) {
     goalsAllowed += n;
+  }
+
+  public int getWins() {
+    return numWins;
+  }
+
+  public int getLosses() {
+    return numLosses;
+  }
+
+  public int getDraws() {
+    return numDraws;
+  }
+
+  public int goalDifference() {
+    return goalsScored - goalsAllowed;
+  }
+
+  public int getGoalsScored() {
+    return goalsScored;
+  }
+
+  public int getGoalsAllowed() {
+    return goalsAllowed;
   }
 
   public void changeRank(int n) {

@@ -39,13 +39,27 @@ public class Tourney {
       groups[i].displayStandings();
     }
 
+    Team[] thirdPlace = new Team[6];
+    int k = 0;
+
     for (int i = 0; i < 6; i += 1) {
-      for (int j = 0; j < 4; j += 1) {
+      for (int j = 3; j >= 0; j -= 1) {
         if (groups[i].getTeams()[j].getRank() < 3) {
           groups[i].getTeams()[j].qualify();
           System.out.println(groups[i].getTeams()[j].toString() + " advances!");
+        } else if (groups[i].getTeams()[j].getRank() == 3) {
+          thirdPlace[k] = groups[i].getTeams()[j];
+          k += 1;
         }
       }
+      System.out.println();
+    }
+
+    Sort qThird = new Sort();
+    qThird.bubbleSorter(thirdPlace, null);
+    for (int i = 2; i < 6; i += 1) {
+      thirdPlace[i].qualify();
+      System.out.println(thirdPlace[i].toString() + " is third and advancing.");
     }
   }
 }
