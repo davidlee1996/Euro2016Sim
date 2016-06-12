@@ -3,10 +3,12 @@ import java.lang.Math;
 public class Group {
   public Team[] teams;
   public Match[] fixtures;
+  public boolean played;
 
   public Group(Team A, Team B, Team C, Team D) {
     teams = new Team[4];
     fixtures = new Match[6];
+    played = false;
     teams[0] = A;
     teams[1] = B;
     teams[2] = C;
@@ -38,7 +40,6 @@ public class Group {
   }
 
   public void play() {
-    System.out.println();
     System.out.println("=====================================================");
     System.out.println();
     System.out.println("In this group are: " + teams[0].toString() + ", "
@@ -51,27 +52,35 @@ public class Group {
       }
       fixtures[i].play();
     }
-    System.out.println();
-  }
-
-  public void displayStandings() {
-    Team[] teams = this.standings();
-    String LINE_TEMPLATE_f = "%s \t%s \t%19s \t%s \t%s \t%s \t%s \t%s \t%s";
-    String LINE_TEMPLATE = "%d \t%-19s \t%d \t%d \t%d \t%d \t%d \t%d \t%d";
-    System.out.println(String.format(LINE_TEMPLATE_f, "Rank", "Name", "Points",
-                                    "Win", "Draw", "Loss", "GD", "GF", "GA"));
-    for (int j = 3; j >=0 ; j -= 1) {
-      System.out.println(String.format(LINE_TEMPLATE, teams[j].getRank(),
-                  teams[j].toString(), teams[j].getPoints(), teams[j].getWins(),
-                  teams[j].getDraws(), teams[j].getLosses(),
-                  teams[j].goalDifference(), teams[j].getGoalsScored(),
-                  teams[j].getGoalsAllowed()));
-    }
+    this.standings();
     System.out.println();
     System.out.println("=====================================================");
   }
 
-  public Team[] standings() {
+  public void displayStandings() {
+    String LINE_TEMPLATE_f = "%s \t%s \t%22s \t%s \t%s \t%s \t%s \t%s \t%s";
+    String LINE_TEMPLATE = "%d \t%-20s \t%d \t%d \t%d \t%d \t%d \t%d \t%d";
+    String teamName;
+    System.out.println("=====================================================");
+    System.out.println(String.format(LINE_TEMPLATE_f, "Rank", "Name", "Points",
+                                    "Win", "Draw", "Loss", "GD", "GF", "GA"));
+    for (int j = 3; j >=0 ; j -= 1) {
+      if (teams[j].qualified()) {
+        teamName = teams[j].toString() + "*";
+      } else {
+        teamName = teams[j].toString();
+      }
+      System.out.println(String.format(LINE_TEMPLATE, teams[j].getRank(),
+                  teamName, teams[j].getPoints(), teams[j].getWins(),
+                  teams[j].getDraws(), teams[j].getLosses(),
+                  teams[j].goalDifference(), teams[j].getGoalsScored(),
+                  teams[j].getGoalsAllowed()));
+    }
+    System.out.println("=====================================================");
+    System.out.println();
+  }
+
+  public void standings() {
     Sort thing = new Sort();
     thing.bubbleSorter(teams, fixtures);
     for (int j = 3; j >= 0; j -= 1) {
@@ -79,7 +88,20 @@ public class Group {
         teams[i].changeRank(4 - i);
       }
     }
+    played = true;
+  }
+
+  public Team[] getStandings() {
+    if (!played) {
+      System.err.println("The final standings have not yet been formulated.");
+      return null;
+    }
     return teams;
+  }
+
+  public Team getTeamRanked(int n) {
+    Team[] stuff = this.getStandings();
+    return stuff[4 - n];
   }
 
 }

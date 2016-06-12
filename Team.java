@@ -2,6 +2,7 @@ public class Team {
   public double odds;
   public int points;
   public String name;
+  public int groupName;
   public int goalsScored;
   public int goalsAllowed;
   public int numWins;
@@ -10,9 +11,10 @@ public class Team {
   public boolean qual;
   public int rank;
 
-  public Team(double d, String n) {
+  public Team(double d, String n, int g) {
     odds = d;
     name = n;
+    groupName = g;
     numWins = 0;
     numDraws = 0;
     numLosses = 0;
@@ -25,6 +27,10 @@ public class Team {
 
   public int getPoints() {
     return points;
+  }
+
+  public int getGroup() {
+    return groupName;
   }
 
   public String toString() {
@@ -48,6 +54,10 @@ public class Team {
 
   public void qualify() {
     qual = true;
+  }
+
+  public boolean qualified() {
+    return qual;
   }
 
   public void score(int n) {
