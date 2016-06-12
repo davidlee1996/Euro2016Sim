@@ -15,6 +15,10 @@ public class Group {
     makeFix();
   }
 
+  public Team[] getTeams() {
+    return new Team[] {A, B, C, D};
+  }
+
   public void makeFix() {
     fixtures = new Match[6];
     fixtures[0] = new Match(A, B, true);
@@ -42,17 +46,23 @@ public class Group {
     System.out.println();
   }
 
+  public void displayStandings() {
+    Team[] teams = this.standings();
+    for (int j = 3; j >=0 ; j -= 1) {
+      System.out.println(teams[j].getRank() + "." + teams[j] + " (" + teams[j].getPoints() + ")");
+    }
+    System.out.println();
+    System.out.println("=====================================================");
+  }
+
   public Team[] standings() {
-    Team[] teams = {A, B, C, D};
+    Team[] teams = this.getTeams();
     sorter(teams);
     for (int j = 3; j >= 0; j -= 1) {
       for (int i = 0; i < 4; i += 1) {
         teams[i].changeRank(4 - i);
       }
-      System.out.println(teams[j].getRank() + "." + teams[j] + " (" + teams[j].getPoints() + ")");
     }
-    System.out.println();
-    System.out.println("=====================================================");
     return teams;
   }
 

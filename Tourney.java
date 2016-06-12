@@ -36,7 +36,16 @@ public class Tourney {
 
     for (int i = 0; i < 6; i += 1) {
       groups[i].play();
-      groups[i].standings();
+      groups[i].displayStandings();
+    }
+
+    for (int i = 0; i < 6; i += 1) {
+      for (int j = 0; j < 4; j += 1) {
+        if (groups[i].getTeams()[j].getRank() < 3) {
+          groups[i].getTeams()[j].qualify();
+          System.out.println(groups[i].getTeams()[j].toString() + " advances!");
+        }
+      }
     }
   }
 }
