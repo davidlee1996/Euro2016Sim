@@ -56,15 +56,16 @@ public class Group {
 
   public void displayStandings() {
     Team[] teams = this.standings();
+    String LINE_TEMPLATE_f = "%s \t%s \t%19s \t%s \t%s \t%s \t%s \t%s \t%s";
+    String LINE_TEMPLATE = "%d \t%-19s \t%d \t%d \t%d \t%d \t%d \t%d \t%d";
+    System.out.println(String.format(LINE_TEMPLATE_f, "Rank", "Name", "Points",
+                                    "Win", "Draw", "Loss", "GD", "GF", "GA"));
     for (int j = 3; j >=0 ; j -= 1) {
-      System.out.println(teams[j].getRank() + "." + teams[j]
-                        + " (Points: " + teams[j].getPoints()
-                        + " | Wins: " + teams[j].getWins()
-                        + " | Draws: " + teams[j].getDraws()
-                        + " | Losses: " + teams[j].getLosses()
-                        + " | GD: " + teams[j].goalDifference()
-                        + " | GF: " + teams[j].getGoalsScored()
-                        + " | GA: " + teams[j].getGoalsAllowed() + ")");
+      System.out.println(String.format(LINE_TEMPLATE, teams[j].getRank(),
+                  teams[j].toString(), teams[j].getPoints(), teams[j].getWins(),
+                  teams[j].getDraws(), teams[j].getLosses(),
+                  teams[j].goalDifference(), teams[j].getGoalsScored(),
+                  teams[j].getGoalsAllowed()));
     }
     System.out.println();
     System.out.println("=====================================================");

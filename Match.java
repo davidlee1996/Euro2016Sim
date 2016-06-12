@@ -80,8 +80,8 @@ public class Match {
       A.concede(B_goal);
       B.concede(A_goal);
       winner = B;
-      System.out.println(B.toString() + " (" + B.getPoints() + ") has won over "
-                        + A.toString() + " (" + A.getPoints() + ").");
+      System.out.println(B.toString() + " (" + B_goal + ") has won over "
+                        + A.toString() + " (" + A_goal + ").");
     }
     played = true;
   }
