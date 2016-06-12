@@ -56,8 +56,8 @@ public class Match {
       B.score(B_goal);
       A.concede(B_goal);
       B.concede(A_goal);
-      System.out.println("This match was a draw between " + A.toString() + " (" + A.getPoints() + ")"
-                        + " and " + B.toString() + " (" + B.getPoints() + ")" + ".");
+      System.out.println("This match was a draw between " + A.toString() + " (" + A_goal + ")"
+                        + " and " + B.toString() + " (" + B_goal + ")" + ".");
     } else if (result == 2) {
       A_goal = rn.nextInt(4) + 2;
       B_goal = rn.nextInt(1) + 0;
@@ -68,8 +68,8 @@ public class Match {
       A.concede(B_goal);
       B.concede(A_goal);
       winner = A;
-      System.out.println(A.toString() + " (" + A.getPoints() + ") has won over "
-                        + B.toString() + " (" + B.getPoints() + ").");
+      System.out.println(A.toString() + " (" + A_goal + ") has won over "
+                        + B.toString() + " (" + B_goal + ").");
     } else {
       B_goal = rn.nextInt(4) + 2;
       A_goal = rn.nextInt(1) + 0;
@@ -105,8 +105,8 @@ public class Match {
       B.score(B_goal);
       A.concede(B_goal);
       B.concede(A_goal);
-      System.out.println(A.toString() + " (" + A.getPoints() + ") has won over "
-                        + B.toString() + " (" + B.getPoints() + ").");
+      System.out.println(A.toString() + " (" + A_goal + ") has won over "
+                        + B.toString() + " (" + B_goal + ").");
     } else if (B_goal > A_goal) {
       winner = B;
       A.change(0);
@@ -115,8 +115,8 @@ public class Match {
       B.score(B_goal);
       A.concede(B_goal);
       B.concede(A_goal);
-      System.out.println(B.toString() + " (" + B.getPoints() + ") has won over "
-                        + A.toString() + " (" + A.getPoints() + ").");
+      System.out.println(B.toString() + " (" + B_goal + ") has won over "
+                        + A.toString() + " (" + A_goal + ").");
     } else {
       winner = null;
       A.change(1);
@@ -125,8 +125,8 @@ public class Match {
       B.score(B_goal);
       A.concede(B_goal);
       B.concede(A_goal);
-      System.out.println("This match was a draw between " + A.toString() + " (" + A.getPoints() + ")"
-                        + " and " + B.toString() + " (" + B.getPoints() + ")" + ".");
+      System.out.println("This match was a draw between " + A.toString() + " (" + A_goal + ")"
+                        + " and " + B.toString() + " (" + B_goal + ")" + ".");
     }
     played = true;
   }
