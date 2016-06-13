@@ -4,6 +4,7 @@ public class Group {
   public Team[] teams;
   public Match[] fixtures;
   public boolean played;
+  String FORMAT_LINE = new String(new char[85]).replace("\0", "=");
 
   public Group(Team A, Team B, Team C, Team D) {
     teams = new Team[4];
@@ -40,7 +41,7 @@ public class Group {
   }
 
   public void play() {
-    System.out.println("=====================================================");
+    System.out.println(FORMAT_LINE);
     System.out.println();
     System.out.println("In this group are: " + teams[0].toString() + ", "
                       + teams[1].toString() + ", " + teams[2].toString() + ", "
@@ -54,14 +55,14 @@ public class Group {
     }
     this.standings();
     System.out.println();
-    System.out.println("=====================================================");
+    System.out.println(FORMAT_LINE);
   }
 
   public void displayStandings() {
     String LINE_TEMPLATE_f = "%s \t%s \t%22s \t%s \t%s \t%s \t%s \t%s \t%s";
     String LINE_TEMPLATE = "%d \t%-20s \t%d \t%d \t%d \t%d \t%d \t%d \t%d";
     String teamName;
-    System.out.println("=====================================================");
+    System.out.println(FORMAT_LINE);
     System.out.println(String.format(LINE_TEMPLATE_f, "Rank", "Name", "Points",
                                     "Win", "Draw", "Loss", "GD", "GF", "GA"));
     for (int j = 3; j >=0 ; j -= 1) {
@@ -76,7 +77,7 @@ public class Group {
                   teams[j].goalDifference(), teams[j].getGoalsScored(),
                   teams[j].getGoalsAllowed()));
     }
-    System.out.println("=====================================================");
+    System.out.println(FORMAT_LINE);
     System.out.println();
   }
 

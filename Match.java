@@ -45,18 +45,17 @@ public class Match {
   }
 
   public void play() {
-    Random rn = new Random();
-    result = rn.nextInt(3) + 1;
+    result = randInt(1, 3);
     if (result == 1) {
-      A_goal = rn.nextInt(3) + 0;
+      A_goal = randInt(0, 3);
       B_goal = A_goal;
       A.score(A_goal);
       B.score(B_goal);
       A.concede(B_goal);
       B.concede(A_goal);
       if (!group) {
-        int A_goalsET = rn.nextInt(3) + 0;
-        int B_goalsET = rn.nextInt(3) + 0;
+        int A_goalsET = randInt(0, 3);
+        int B_goalsET = randInt(0, 3);
         A_goal += A_goalsET;
         B_goal += B_goalsET;
         A.score(A_goalsET);
@@ -76,7 +75,7 @@ public class Match {
           System.out.println(B.toString() + " (" + B_goal + ") has won over "
                             + A.toString() + " (" + A_goal + ") in extra time.");
         } else {
-          int penResult = rn.nextInt(1) + 0;
+          int penResult = randInt(0, 1);
           if (penResult == 1) {
             A.change(3);
             B.change(0);
@@ -98,8 +97,8 @@ public class Match {
                           + " and " + B.toString() + " (" + B_goal + ")" + ".");
       }
     } else if (result == 2) {
-      A_goal = rn.nextInt(4) + 2;
-      B_goal = rn.nextInt(2) + 0;
+      A_goal = randInt(2, 4);
+      B_goal = randInt(0, 1);
       A.change(3);
       B.change(0);
       A.score(A_goal);
@@ -110,8 +109,8 @@ public class Match {
       System.out.println(A.toString() + " (" + A_goal + ") has won over "
                         + B.toString() + " (" + B_goal + ").");
     } else {
-      B_goal = rn.nextInt(4) + 2;
-      A_goal = rn.nextInt(2) + 0;
+      B_goal = randInt(2, 4);
+      A_goal = randInt(0, 1);
       A.change(0);
       B.change(3);
       A.score(A_goal);
@@ -183,5 +182,11 @@ public class Match {
                         + " and " + B.toString() + " (" + B_goal + ")" + ".");
     }
     played = true;
+  }
+
+  public static int randInt(int min, int max) {
+    Random rn = new Random();
+    int randomNum = rn.nextInt((max - min) + 1) + min;
+    return randomNum;
   }
 }
