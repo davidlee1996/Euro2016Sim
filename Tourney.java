@@ -26,6 +26,10 @@ public class Tourney {
     thirdPlayed = false;
   }
 
+  public Group[] getGroups() {
+    return groups;
+  }
+
   public void createTeams() {
     France = new Team(3, "France", 0);//0
     Germany = new Team(4, "Germany", 2);//2
@@ -72,6 +76,16 @@ public class Tourney {
     groupPlayed = true;
   }
 
+  public void setPlayGroups() {
+    groupPlayed = true;
+  }
+
+  public void showStandings() {
+    for (int i = 0; i < 6; i += 1) {
+      groups[i].displayStandings();
+    }
+  }
+
   public void qualifyTeams() {
     if (!groupPlayed) {
       System.err.println("Group stages have not finished yet.");
@@ -80,7 +94,7 @@ public class Tourney {
     /* Qualifying teams determined. */
     Team[] thirdPlace = new Team[6];
     int k = 0;
-    Team[] qTeams = new Team[16];
+    //Team[] qTeams = new Team[16];
     int q = 0;
     Team[] qThirds = new Team[4];
     int z = 0;
@@ -89,8 +103,8 @@ public class Tourney {
       for (int j = 3; j >= 0; j -= 1) {
         if (groups[i].getTeams()[j].getRank() < 3) {
           groups[i].getTeams()[j].qualify();
-          qTeams[q] = groups[i].getTeams()[j];
-          q += 1;
+          //qTeams[q] = groups[i].getTeams()[j];
+          //q += 1;
         } else if (groups[i].getTeams()[j].getRank() == 3) {
           thirdPlace[k] = groups[i].getTeams()[j];
           k += 1;
@@ -102,7 +116,7 @@ public class Tourney {
     qThird.bubbleSorter(thirdPlace, null);
     for (int i = 2; i < 6; i += 1) {
       thirdPlace[i].qualify();
-      qTeams[q] = thirdPlace[i];
+      //qTeams[q] = thirdPlace[i];
       qThirds[z] = thirdPlace[i];
       z += 1;
       q += 1;

@@ -40,6 +40,11 @@ public class Match {
     }
   }
 
+  public Team[] getTeams() {
+    Team[] teams = {A, B};
+    return teams;
+  }
+
   public boolean contains(Team A1, Team B1) {
     return (A1.equals(A) && B1.equals(B)) || (A1.equals(B) && B1.equals(A));
   }
