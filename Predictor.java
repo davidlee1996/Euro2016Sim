@@ -42,7 +42,7 @@ public class Predictor {
       System.out.println();
     }
     Euro2016.setPlayGroups();
-    //Euro2016.qualifyTeams();
+    Euro2016.qualifyTeams();
     //Euro2016.playRoundOf16();
     //Euro2016.playQuarterFinals();
     //Euro2016.playSemiFinals();

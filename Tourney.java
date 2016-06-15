@@ -78,6 +78,9 @@ public class Tourney {
 
   public void setPlayGroups() {
     groupPlayed = true;
+    for (int i = 0; i < 6; i += 1) {
+      groups[i].standings();
+    }
   }
 
   public void showStandings() {

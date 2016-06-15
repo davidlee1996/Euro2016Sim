@@ -176,7 +176,6 @@ public class Match {
       System.out.println(B.toString() + " (" + B_goal + ") has won over "
                         + A.toString() + " (" + A_goal + ").");
     } else {
-      winner = null;
       A.change(1);
       B.change(1);
       A.score(A_goal);
