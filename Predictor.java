@@ -12,6 +12,7 @@ public class Predictor {
     Euro2016.createGroups();
     String FORMAT_LINE = new String(new char[85]).replace("\0", "=");
     Group[] groups = Euro2016.getGroups();
+    boolean auto = args[0].equals("a");
     String file_name = "predict.txt";
     ReadFile fr = new ReadFile(file_name);
     String[] lines = fr.OpenFile();
@@ -22,7 +23,7 @@ public class Predictor {
         Team A = match.getTeams()[0];
         Team B = match.getTeams()[1];
         System.out.println("This match is between " + A.toString() + " and " + B.toString());
-        if (args[0].equals("a")) {
+        if (auto) {
           System.out.println("Enter the score for " + A.toString() + ": ");
           int aScore = Integer.parseInt(lines[k]);
           System.out.println("Enter the score for " + B.toString() + ": ");
@@ -43,6 +44,29 @@ public class Predictor {
     }
     Euro2016.setPlayGroups();
     Euro2016.qualifyTeams();
+
+    Match[] RoundOf16 = Euro2016.getRoundOf16();
+    for (int i = 0; i < RoundOf16.length; i += 1) {
+      Match match = RoundOf16[i];
+      Team A = match.getTeams()[0];
+      Team B = match.getTeams()[1];
+      System.out.println("This match is between " + A.toString() + " and " + B.toString());
+      if (auto) {
+        System.out.println("Enter the score for " + A.toString() + ": ");
+        int aScore = Integer.parseInt(lines[k]);
+        System.out.println("Enter the score for " + B.toString() + ": ");
+        int bScore = Integer.parseInt(lines[k + 1]);
+        match.setScore(aScore, bScore);
+        k += 2;
+      } else {
+        System.out.print("Enter the score for " + A.toString() + ": ");
+        int aScore = reader.nextInt();
+        System.out.print("Enter the score for " + B.toString() + ": ");
+        int bScore = reader.nextInt();
+        match.setScore(aScore, bScore);
+      }
+      System.out.println();
+    }
     //Euro2016.playRoundOf16();
     //Euro2016.playQuarterFinals();
     //Euro2016.playSemiFinals();

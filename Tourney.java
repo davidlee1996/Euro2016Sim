@@ -227,6 +227,14 @@ public class Tourney {
     knockoutsMade = true;
   }
 
+  public Match[] getRoundOf16() {
+    if (!knockoutsMade) {
+      System.err.println("Knockout rounds have not been made yet.");
+      return null;
+    }
+    return RoundOf16;
+  }
+
   public void playRoundOf16() {
     if (!knockoutsMade) {
       System.err.println("Knockout rounds have not been made yet.");
