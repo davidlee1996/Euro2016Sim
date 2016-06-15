@@ -14,6 +14,8 @@ public class Tourney {
   Match[] RoundOf16;
   Match[] QuarterFinals;
   Match[] SemiFinals;
+  Match ThirdPlaceMatch;
+  Match FinalMatch;
 
   public Tourney() {
     createTeams();
@@ -227,12 +229,60 @@ public class Tourney {
     knockoutsMade = true;
   }
 
+  public void setRoundOf16Played() {
+    R16Played = true;
+  }
+
+  public void setQuarterFinalsPlayed() {
+    quarterPlayed = true;
+  }
+
+  public void setSemiFinalsPlayed() {
+    semiPlayed = true;
+  }
+
+  public void setThirdPlacePlayed() {
+    thirdPlayed = true;
+  }
+
   public Match[] getRoundOf16() {
     if (!knockoutsMade) {
       System.err.println("Knockout rounds have not been made yet.");
       return null;
     }
     return RoundOf16;
+  }
+
+  public Match[] getQuarterFinals() {
+    if (!R16Played) {
+      System.err.println("Quarterfinal rounds have not been made yet.");
+      return null;
+    }
+    return QuarterFinals;
+  }
+
+  public Match[] getSemiFinals() {
+    if (!quarterPlayed) {
+      System.err.println("Semifinal rounds have not been made yet.");
+      return null;
+    }
+    return SemiFinals;
+  }
+
+  public Match getThirdPlaceMatch() {
+    if (!semiPlayed) {
+      System.err.println("Third place match has not been made yet.");
+      return null;
+    }
+    return ThirdPlaceMatch;
+  }
+
+  public Match getFinalMatch() {
+    if (!semiPlayed) {
+      System.err.println("Final match has not been made yet.");
+      return null;
+    }
+    return FinalMatch;
   }
 
   public void playRoundOf16() {
@@ -244,6 +294,7 @@ public class Tourney {
       RoundOf16[i].play();
     }
     R16Played = true;
+    QuarterFinals = createQuarterFinals();
     System.out.println();
   }
 
@@ -253,14 +304,21 @@ public class Tourney {
       System.err.println("Round of 16 matches have not all been played yet.");
       return;
     }
+    for (int i = 0; i < 4; i += 1) {
+      QuarterFinals[i].play();
+    }
+    quarterPlayed = true;
+    SemiFinals = createSemiFinals();
+    System.out.println();
+  }
+
+  public Match[] createQuarterFinals() {
     QuarterFinals = new Match[4];
     for (int i = 0, j = 0; i < 4; i += 1) {
       QuarterFinals[i] = new Match(RoundOf16[j].getWinner(), RoundOf16[j + 1].getWinner(), false);
-      QuarterFinals[i].play();
       j += 2;
     }
-    quarterPlayed = true;
-    System.out.println();
+    return QuarterFinals;
   }
 
   public void playSemiFinals() {
@@ -269,14 +327,27 @@ public class Tourney {
       System.err.println("Quarterfinal matches have not all been played yet.");
       return;
     }
+    for (int i = 0; i < 2; i += 1) {
+      SemiFinals[i].play();
+    }
+    semiPlayed = true;
+    createFinalsAndThird();
+    System.out.println();
+  }
+
+  public Match[] createSemiFinals() {
     SemiFinals = new Match[2];
     for (int i = 0, j = 0; i < 2; i += 1) {
       SemiFinals[i] = new Match(QuarterFinals[j].getWinner(), QuarterFinals[j + 1].getWinner(), false);
       SemiFinals[i].play();
       j += 2;
     }
-    semiPlayed = true;
-    System.out.println();
+    return SemiFinals;
+  }
+
+  public void createFinalsAndThird() {
+    ThirdPlaceMatch = new Match(SemiFinals[0].getLoser(), SemiFinals[1].getLoser(), false);
+    FinalMatch = new Match(SemiFinals[0].getWinner(), SemiFinals[1].getWinner(), false);
   }
 
   public void playThirdPlaceMatch() {
@@ -285,7 +356,6 @@ public class Tourney {
       System.err.println("Semifinal matches have not all been played yet.");
       return;
     }
-    Match ThirdPlaceMatch = new Match(SemiFinals[0].getLoser(), SemiFinals[1].getLoser(), false);
     ThirdPlaceMatch.play();
     thirdPlayed = true;
     System.out.println();
@@ -298,7 +368,6 @@ public class Tourney {
       return;
     }
     System.out.println("Final match!");
-    Match FinalMatch = new Match(SemiFinals[0].getWinner(), SemiFinals[1].getWinner(), false);
     FinalMatch.play();
     System.out.println();
   }
